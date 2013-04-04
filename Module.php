@@ -52,7 +52,6 @@ class Module
         return array(
             'controller_plugins' => array(
                 'invokables' => array(
-                    'getEntityManager' => 'SclZfUtilities\Controller\Plugin\EntityManager',
                     'formSubmitted'    => 'SclZfUtilities\Controller\Plugin\FormSubmitted'
                 ),
             ),
