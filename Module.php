@@ -76,11 +76,23 @@ class Module
                 'SclZfUtilities\Model\Messages' => 'SclZfUtilities\Model\Messages',
             ),
             'factories' => array(
-                'SclZfUtilities\Hydrator\DoctrineObjectHydrator' => function ($sm) {
-                    $entityManager = $sm->get('doctrine.entitymanager.orm_default');
-                    $hydrator = new DoctrineObjectHydrator($entityManager, new ClassMethods());
-                    return $hydrator;
+                'SclZfUtilities\Doctrine\FlushLock' => function ($sm) {
+                    return new \SclZfUtilities\Doctrine\FlushLock(
+                        $sm->get('doctrine.entitymanager.orm_default')
+                    );
                 },
+                'SclZfUtilities\Hydrator\DoctrineObjectHydrator' => function ($sm) {
+                    return new DoctrineObjectHydrator(
+                        $sm->get('doctrine.entitymanager.orm_default'),
+                        new ClassMethods()
+                    );
+                },
+                'SclZfUtilities\Mapper\GenericDoctrineMapper' => function ($sm) {
+                    return new \SclZfUtilities\Mapper\GenericDoctrineMapper(
+                        $sm->get('doctrine.entitymanager.orm_default'),
+                        $sm->get('SclZfUtilities\Doctrine\FlushLock')
+                    );
+                }
             ),
         );
     }
