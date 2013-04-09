@@ -112,9 +112,10 @@ class GenericDoctrineMapper
     /**
      * Does a search by criteria.
      *
+     * @param  array $criteria
      * @return object[]|null
      */
-    public function fetchAll($criteria)
+    public function fetchBy(array $criteria)
     {
         return $this->entityManager->getRepository($this->entityName)->findBy($criteria);
     }
