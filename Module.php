@@ -94,6 +94,9 @@ class Module
                     );
                 }
             ),
+            'shared' => array(
+                'SclZfUtilities\Mapper\GenericDoctrineMapper' => false,
+            ),
         );
     }
 }
