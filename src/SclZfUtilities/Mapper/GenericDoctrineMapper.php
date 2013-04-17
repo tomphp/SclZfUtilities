@@ -2,7 +2,7 @@
 
 namespace SclZfUtilities\Mapper;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\Common\Persistence\ObjectManager;
 use SclZfUtilities\Doctrine\FlushLock;
 
 /**
@@ -13,9 +13,9 @@ use SclZfUtilities\Doctrine\FlushLock;
 class GenericDoctrineMapper
 {
     /**
-     * The Doctrine EntityManager.
+     * The Doctrine ObjectManager.
      *
-     * @var EntityManager
+     * @var ObjectManager
      */
     protected $entityManager;
 
@@ -36,12 +36,12 @@ class GenericDoctrineMapper
     /**
      * Inject required objects.
      *
-     * @param  EntityManager $entityManager
+     * @param  ObjectManager $entityManager
      * @param  FlushLock     $flushLock
      * @param  string        $entityName
      */
     public function __construct(
-        EntityManager $entityManager,
+        ObjectManager $entityManager,
         FlushLock $flushLock,
         $entityName = null
     ) {

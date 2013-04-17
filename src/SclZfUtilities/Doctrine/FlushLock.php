@@ -2,7 +2,7 @@
 
 namespace SclZfUtilities\Doctrine;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\Common\Persistence\ObjectManager;
 
 /**
  * This calls flush on the doctrine EntityManager once on sub-persistence
@@ -15,7 +15,7 @@ class FlushLock
     /**
      * The Doctrine EntityManager.
      *
-     * @var EntityManager
+     * @var ObjectManager
      */
     protected $entityManager;
 
@@ -29,9 +29,9 @@ class FlushLock
     /**
      * Inject the EntityManager.
      *
-     * @param EntityManager $entityManager
+     * @param ObjectManager $entityManager
      */
-    public function __construct(EntityManager $entityManager)
+    public function __construct(ObjectManager $entityManager)
     {
         $this->entityManager = $entityManager;
     }
