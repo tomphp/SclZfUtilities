@@ -18,8 +18,11 @@
     },
     "autoload": {
         "psr-0": {
-            "SclUtilities\\": "src/"
-        }
+            "SclUtilities": "src/"
+        },
+        "classmap": [
+            "./Module.php"
+        ]
     }
 
 }
