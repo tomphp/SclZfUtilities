@@ -4,6 +4,7 @@ namespace SclZfUtilities\Mapper;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use SclZfUtilities\Doctrine\FlushLock;
+use SclZfUtilities\Exception\InvalidArgumentException;
 
 /**
  * Basic mapper class for doctrine storage.
@@ -74,16 +75,26 @@ class GenericDoctrineMapper
     }
 
     /**
-     * Persists to the Order to storage.
+     * Persists to the entity to storage.
      *
-     * @param  object $order
+     * @param  object $entity
      * @return boolean
      */
-    public function save($order)
+    public function save($entity)
     {
+        if (!$entity instanceof $this->entityName) {
+            throw new InvalidArgumentException(
+                sprintf(
+                    '$object must be an instance of "%s"; got %s.',
+                    $this->entityName,
+                    is_object($entity) ? get_class($entity) : gettype($entity)
+                )
+            );
+        }
+
         $this->flushLock->lock();
 
-        $this->entityManager->persist($order);
+        $this->entityManager->persist($entity);
 
         return $this->flushLock->unlock();
     }
