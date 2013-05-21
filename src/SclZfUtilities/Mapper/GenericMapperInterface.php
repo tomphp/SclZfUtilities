@@ -1,6 +1,6 @@
 <?php
 
-namespace BookingMaster\Mapper;
+namespace SclZfUtilities\Mapper;
 
 /**
  * Basic interface for basic mapper class for doctrine storage.
