@@ -17,7 +17,9 @@
     "require-dev": {
         "phpunit/phpunit" : "3.7.*",
         "squizlabs/php_codesniffer" : "1.*",
-        "phpmd/phpmd" : "1.4.0"
+        "phpmd/phpmd" : "1.4.0",
+        "doctrine/doctrine-module": "0.*",
+        "doctrine/doctrine-orm-module": "0.*"
     },
     "autoload": {
         "psr-0": {
