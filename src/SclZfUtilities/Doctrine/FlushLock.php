@@ -55,6 +55,11 @@ class FlushLock
     {
         $this->count--;
 
+        if ($this->count < 0) {
+            $this->count = 0;
+            return false;
+        }
+
         if (0 === $this->count) {
             $this->entityManager->flush();
 
