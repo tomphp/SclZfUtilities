@@ -2,6 +2,7 @@ SclZfUtilities
 ==============
 
 [![Build Status](https://travis-ci.org/SCLInternet/SclZfUtilities.png?branch=master)](https://travis-ci.org/SCLInternet/SclZfUtilities)
+[![Coverage Status](https://coveralls.io/repos/SCLInternet/SclZfUtilities/badge.png)](https://coveralls.io/r/SCLInternet/SclZfUtilities)
 
 Some useful utility classes, plugins and view helpers.
 
