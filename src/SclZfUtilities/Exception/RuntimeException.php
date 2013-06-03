@@ -3,11 +3,11 @@
 namespace SclZfUtilities\Exception;
 
 /**
- * InvalidArgumentException
+ * RuntimeException
  *
  * @author Tom Oram <tom@scl.co.uk>
  */
-class InvalidArgumentException extends \InvalidArgumentException implements
+class RuntimeException extends \RuntimeException implements
     ExceptionInterface
 {
 }
