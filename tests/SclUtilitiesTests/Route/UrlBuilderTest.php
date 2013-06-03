@@ -56,8 +56,8 @@ class UrlBuilderTest extends \PHPUnit_Framework_TestCase
     /**
      * Check a basic all of getUrl works properly.
      *
-     * @covers SclZfUtilities\Router\UrlBuilder::__construct
-     * @covers SclZfUtilities\Router\UrlBuilder::getUrl
+     * @covers SclZfUtilities\Route\UrlBuilder::setRouter
+     * @covers SclZfUtilities\Route\UrlBuilder::getUrl
      *
      * @return void
      */
@@ -82,8 +82,8 @@ class UrlBuilderTest extends \PHPUnit_Framework_TestCase
     /**
      * Check a basic all of getUrl works properly.
      *
-     * @covers SclZfUtilities\Router\UrlBuilder::__construct
-     * @covers SclZfUtilities\Router\UrlBuilder::getUrl
+     * @covers SclZfUtilities\Route\UrlBuilder::setRouter
+     * @covers SclZfUtilities\Route\UrlBuilder::getUrl
      * @expectedException SclZfUtilities\Exception\InvalidArgumentException
      *
      * @return void
@@ -98,8 +98,8 @@ class UrlBuilderTest extends \PHPUnit_Framework_TestCase
     /**
      * Check a basic all of getUrl with params of type \Traverable works.
      *
-     * @covers SclZfUtilities\Router\UrlBuilder::__construct
-     * @covers SclZfUtilities\Router\UrlBuilder::getUrl
+     * @covers SclZfUtilities\Route\UrlBuilder::setRouter
+     * @covers SclZfUtilities\Route\UrlBuilder::getUrl
      *
      * @return void
      */
