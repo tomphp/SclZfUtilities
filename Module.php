@@ -92,7 +92,12 @@ class Module
                         $sm->get('doctrine.entitymanager.orm_default'),
                         $sm->get('SclZfUtilities\Doctrine\FlushLock')
                     );
-                }
+                },
+                'SclZfUtilities\Route\UrlBuilder' => function ($sm) {
+                    $builder = new \SclZfUtilities\Route\UrlBuilder();
+                    $builder->setRoute($sm->get('HttpRouter'));
+                    return $builder;
+                },
             ),
             'shared' => array(
                 'SclZfUtilities\Mapper\GenericDoctrineMapper' => false,

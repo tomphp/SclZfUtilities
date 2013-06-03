@@ -7,6 +7,6 @@ namespace SclZfUtilities\Exception;
  *
  * @author Tom Oram <tom@scl.co.uk>
  */
-interface UtilitiesExceptionInterface
+interface ExceptionInterface
 {
 }
