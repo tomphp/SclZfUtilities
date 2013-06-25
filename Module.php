@@ -95,7 +95,7 @@ class Module
                 },
                 'SclZfUtilities\Route\UrlBuilder' => function ($sm) {
                     $builder = new \SclZfUtilities\Route\UrlBuilder();
-                    $builder->setRoute($sm->get('HttpRouter'));
+                    $builder->setRouter($sm->get('HttpRouter'));
                     return $builder;
                 },
             ),
