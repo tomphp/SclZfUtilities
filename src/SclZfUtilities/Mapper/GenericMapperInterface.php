@@ -38,7 +38,7 @@ interface GenericMapperInterface
      *
      * @return object[]|null
      */
-    public function fetchAll();
+    public function findAll();
 
     /**
      * Does a search by criteria.
@@ -46,7 +46,7 @@ interface GenericMapperInterface
      * @param  array $criteria
      * @return object[]|null
      */
-    public function fetchBy(array $criteria);
+    public function findBy(array $criteria);
 
     /**
      * Deletes the order from the storage.
