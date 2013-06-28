@@ -115,7 +115,7 @@ class GenericDoctrineMapper
      *
      * @return object[]|null
      */
-    public function fetchAll()
+    public function findAll()
     {
         return $this->entityManager->getRepository($this->entityName)->findAll();
     }
@@ -126,7 +126,7 @@ class GenericDoctrineMapper
      * @param  array $criteria
      * @return object[]|null
      */
-    public function fetchBy(array $criteria)
+    public function findBy(array $criteria)
     {
         return $this->entityManager->getRepository($this->entityName)->findBy($criteria);
     }
