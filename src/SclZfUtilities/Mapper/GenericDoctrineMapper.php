@@ -5,7 +5,6 @@ namespace SclZfUtilities\Mapper;
 use Doctrine\Common\Persistence\ObjectManager;
 use SclZfUtilities\Doctrine\FlushLock;
 use SclZfUtilities\Exception\InvalidArgumentException;
-
 /**
  * Basic mapper class for doctrine storage.
  *
@@ -85,9 +84,10 @@ class GenericDoctrineMapper
         if (!$entity instanceof $this->entityName) {
             throw new InvalidArgumentException(
                 sprintf(
-                    '$object must be an instance of "%s"; got %s.',
+                    '$entity must be an instance of "%s"; got "%s" in %s.',
                     $this->entityName,
-                    is_object($entity) ? get_class($entity) : gettype($entity)
+                    is_object($entity) ? get_class($entity) : gettype($entity),
+                    __METHOD__
                 )
             );
         }
@@ -139,6 +139,17 @@ class GenericDoctrineMapper
      */
     public function delete($entity)
     {
+        if (!$entity instanceof $this->entityName) {
+            throw new InvalidArgumentException(
+                sprintf(
+                    '$entity must be an instance of "%s"; got "%s" in %s.',
+                    $this->entityName,
+                    is_object($entity) ? get_class($entity) : gettype($entity),
+                    __METHOD__
+                )
+            );
+        }
+
         $this->flushLock->lock();
 
         $this->entityManager->remove($entity);

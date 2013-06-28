@@ -52,7 +52,8 @@ class GenericDoctrineMapperTest extends \PHPUnit_Framework_TestCase
     /**
      * Test that create() returns an instance of ENTITY_NAME.
      *
-     * @covers SclZfUtilities\Mapper\GenericDoctrineMapper::save
+     * @covers SclZfUtilities\Mapper\GenericDoctrineMapper::create
+     * @covers SclZfUtilities\Mapper\GenericDoctrineMapper::setEntityName
      */
     public function testCreate()
     {
@@ -68,6 +69,7 @@ class GenericDoctrineMapperTest extends \PHPUnit_Framework_TestCase
      * Then A SclZfUtilities\Exception\InvalidArgumentException should be thrown.
      *
      * @covers            SclZfUtilities\Mapper\GenericDoctrineMapper::save
+     * @covers            SclZfUtilities\Mapper\GenericDoctrineMapper::setEntityName
      * @expectedException SclZfUtilities\Exception\InvalidArgumentException
      */
     public function testSaveWithBadEntityType()
@@ -83,6 +85,7 @@ class GenericDoctrineMapperTest extends \PHPUnit_Framework_TestCase
      * Then It should be persisted by the Entity Manager
      *
      * @covers SclZfUtilities\Mapper\GenericDoctrineMapper::save
+     * @covers SclZfUtilities\Mapper\GenericDoctrineMapper::setEntityName
      */
     public function testSaveWithGoodEntity()
     {
@@ -102,6 +105,7 @@ class GenericDoctrineMapperTest extends \PHPUnit_Framework_TestCase
      * Test findById passes the call onto the entity manager.
      *
      * @covers SclZfUtilities\Mapper\GenericDoctrineMapper::findById
+     * @covers SclZfUtilities\Mapper\GenericDoctrineMapper::setEntityName
      */
     public function testFindById()
     {
@@ -123,6 +127,7 @@ class GenericDoctrineMapperTest extends \PHPUnit_Framework_TestCase
      * Test findAll passes the call onto the entity manager.
      *
      * @covers SclZfUtilities\Mapper\GenericDoctrineMapper::findAll
+     * @covers SclZfUtilities\Mapper\GenericDoctrineMapper::setEntityName
      */
     public function testFindAll()
     {
@@ -147,6 +152,7 @@ class GenericDoctrineMapperTest extends \PHPUnit_Framework_TestCase
      * Test findBy passes the call onto the entity manager.
      *
      * @covers SclZfUtilities\Mapper\GenericDoctrineMapper::findBy
+     * @covers SclZfUtilities\Mapper\GenericDoctrineMapper::setEntityName
      */
     public function testFindBy()
     {
@@ -170,13 +176,32 @@ class GenericDoctrineMapperTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test delete that delete called with an object which isn't an instance of
+     * ENTITY_NAME throws an exception.
+     *
+     * @covers            SclZfUtilities\Mapper\GenericDoctrineMapper::delete
+     * @expectedException SclZfUtilities\Exception\InvalidArgumentException
+     */
+    public function testDeleteWithBadEntityClass()
+    {
+        $entity = new \stdClass();
+
+        $this->entityManager
+             ->expects($this->never())
+             ->method('remove');
+
+        $this->mapper->delete($entity);
+    }
+    /**
      * Test delete passes request on to entity manager.
      *
      * @covers SclZfUtilities\Mapper\GenericDoctrineMapper::delete
      */
     public function testDelete()
     {
-        $entity = 'ENTITY';
+        $entity = new \stdClass();
+
+        $this->mapper->setEntityName('stdClass');
 
         $this->entityManager
              ->expects($this->once())
