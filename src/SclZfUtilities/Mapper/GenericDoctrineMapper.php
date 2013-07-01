@@ -85,9 +85,10 @@ class GenericDoctrineMapper
         if (!$entity instanceof $this->entityName) {
             throw new InvalidArgumentException(
                 sprintf(
-                    '$object must be an instance of "%s"; got %s.',
+                    '$entity must be an instance of "%s"; got "%s" in %s.',
                     $this->entityName,
-                    is_object($entity) ? get_class($entity) : gettype($entity)
+                    is_object($entity) ? get_class($entity) : gettype($entity),
+                    __METHOD__
                 )
             );
         }
@@ -115,7 +116,7 @@ class GenericDoctrineMapper
      *
      * @return object[]|null
      */
-    public function fetchAll()
+    public function findAll()
     {
         return $this->entityManager->getRepository($this->entityName)->findAll();
     }
@@ -126,7 +127,7 @@ class GenericDoctrineMapper
      * @param  array $criteria
      * @return object[]|null
      */
-    public function fetchBy(array $criteria)
+    public function findBy(array $criteria)
     {
         return $this->entityManager->getRepository($this->entityName)->findBy($criteria);
     }
@@ -139,6 +140,17 @@ class GenericDoctrineMapper
      */
     public function delete($entity)
     {
+        if (!$entity instanceof $this->entityName) {
+            throw new InvalidArgumentException(
+                sprintf(
+                    '$entity must be an instance of "%s"; got "%s" in %s.',
+                    $this->entityName,
+                    is_object($entity) ? get_class($entity) : gettype($entity),
+                    __METHOD__
+                )
+            );
+        }
+
         $this->flushLock->lock();
 
         $this->entityManager->remove($entity);
