@@ -57,10 +57,11 @@ class Module
             ),
             'view_helpers' => array(
                 'invokables' => array(
-                    'formatPrice' => 'SclZfUtilities\View\Helper\FormatPrice',
-                    'formatDate'  => 'SclZfUtilities\View\Helper\FormatDate',
-                    'idUrl'       => 'SclZfUtilities\View\Helper\UrlWithId',
-                    'pageTitle'   => 'SclZfUtilities\View\Helper\PageTitle',
+                    'formatPrice'    => 'SclZfUtilities\View\Helper\FormatPrice',
+                    'formatDate'     => 'SclZfUtilities\View\Helper\FormatDate',
+                    'getFormBuilder' => 'SclZfUtilities\Controller\Plugin\FormBuilder',
+                    'idUrl'          => 'SclZfUtilities\View\Helper\UrlWithId',
+                    'pageTitle'      => 'SclZfUtilities\View\Helper\PageTitle',
                 ),
             ),
         );
@@ -81,10 +82,13 @@ class Module
                         $sm->get('doctrine.entitymanager.orm_default')
                     );
                 },
-                'SclZfUtilities\Hydrator\DoctrineObjectHydrator' => function ($sm) {
-                    return new DoctrineObjectHydrator(
-                        $sm->get('doctrine.entitymanager.orm_default'),
-                        new ClassMethods()
+                'SclZfUtilities\Form\EntityFormBuilder' => function ($sm) {
+                    $hydratorManager = $sm->get('HydratorManager');
+
+                    return new \SclZfUtilities\Form\EntityFormBuilder(
+                        $sm->get('Request'),
+                        $sm->get('doctrine.formannotationbuilder.orm_default'),
+                        $hydratorManager->get('DoctrineModule\Stdlib\Hydrator\DoctrineObject')
                     );
                 },
                 'SclZfUtilities\Mapper\GenericDoctrineMapper' => function ($sm) {
