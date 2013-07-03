@@ -7,14 +7,15 @@
 namespace SclZfUtilities\Form;
 
 use Doctrine\ORM\EntityManager;
-use DoctrineORMModule\Form\Annotation\AnnotationBuilder;
+use SclZfUtilities\Exception\RuntimeException;
 use SclZfUtilities\Mapper\GenericMapperInterface;
+use Zend\Form\Annotation\AnnotationBuilder;
 use Zend\Form\Form;
 use Zend\Http\Request;
 use Zend\Stdlib\Hydrator\HydratorInterface;
 
 /**
- * This class constructs a form object from a given annotated object
+ * This class constructs a form object from a given annotated entity
  * and also handles the reading back of the form data and saving of
  * the object.
  *
@@ -71,7 +72,7 @@ class EntityFormBuilder
     }
 
     /**
-     * Sets the object manager which will be used to fetch & save the object.
+     * Sets the mapper which will be used to fetch & save the entity.
      *
      * @param  GenericMapperInterface $mapper
      * @return self
@@ -84,60 +85,60 @@ class EntityFormBuilder
     }
 
     /**
-     * This connects up the hydrators for sub-forms to the EntityManager
-     * and binds to the object. It also adds a submit button to the form.
+     * Set the hydrator and adds a submit button to the form.
      *
      * @param  Form   $form
-     * @param  object $object
+     * @param  object $entity
      * @param  string $submit
      * @return Form
      */
-    public function prepareForm(Form $form, $object, $submit)
+    public function prepareForm(Form $form, $entity, $submit = null)
     {
-
         $form->setHydrator($this->hydrator);
 
-        $form->add(
-            array(
-                'name' => 'submit',
-                'attributes' => array(
-                    'type'  => 'submit',
-                    'value' => $submit,
-                    'id'    => 'submitbutton',
-                ),
-            )
-        );
+        if (null !== $submit) {
+            $form->add(
+                array(
+                    'name' => 'submit',
+                    'attributes' => array(
+                        'type'  => 'submit',
+                        'value' => $submit,
+                        'id'    => 'submitbutton',
+                    ),
+                )
+            );
+        }
 
-        $form->bind($object);
+        $form->bind($entity);
 
         return $form;
     }
 
     /**
-     * Returns a form build from the provided object using Zend form annotations.
+     * Returns a form build from the provided entity using Zend form annotations.
      *
-     * @param  object $object
+     * @param  object $entity
      * @param  string $submit
      * @return Form
      */
-    public function getForm($object, $submit)
+    public function createForm($entity, $submit = null)
     {
-        $form = $this->annotationBuilder->createForm($object);
+        $form = $this->annotationBuilder->createForm($entity);
 
-        return $this->prepareForm($form, $object, $submit);
+        return $this->prepareForm($form, $entity, $submit);
     }
 
     /**
      * This method checks if the form is submitted and if it has and it valid
      * the object is saved. This method relies on object & form being pre-bound.
      *
-     * @param  object           $object
+     * @param  object           $entity
      * @param  Form             $form
      * @param  callable         $preSaveCallback
-     * @return boolean          True if the object has been saved
+     * @return boolean          True if the entity has been saved
      * @throws RuntimeException When save is called but no mapper is set.
      */
-    public function saveObject($object, Form $form, $preSaveCallback = null)
+    public function save($entity, Form $form, callable $preSaveCallback = null)
     {
         if (!$this->request->isPost()) {
             return false;
@@ -154,10 +155,10 @@ class EntityFormBuilder
         }
 
         if (null !== $preSaveCallback) {
-            $preSaveCallback($object);
+            $preSaveCallback($entity);
         }
 
-        $this->mapper->save($object);
+        $this->mapper->save($entity);
 
         return true;
     }
