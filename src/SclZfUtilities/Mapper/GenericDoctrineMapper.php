@@ -52,6 +52,16 @@ class GenericDoctrineMapper
     }
 
     /**
+     * {@inheritDoc}
+     *
+     * @return string
+     */
+    public function getEntityName()
+    {
+        return $this->entityName;
+    }
+
+    /**
      * Set the name of the entity that this class deals with.
      *
      * @param  string $entityName
