@@ -5,10 +5,25 @@ namespace SclZfUtilities;
 use SclZfUtilities\Hydrator\DoctrineObjectHydrator;
 use SclZfUtilities\View\Helper\ControllerActionName;
 use Zend\Stdlib\Hydrator\ClassMethods;
+use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
+use Zend\ModuleManager\Feature\BootstrapListenerInterface;
+use Zend\ModuleManager\Feature\ConfigProviderInterface;
+use Zend\ModuleManager\Feature\ServiceProviderInterface;
 
-class Module
+/**
+ * Module for SclZfUtilities library.
+ *
+ * @author Tom Oram <tom@scl.co.uk>
+ */
+class Module implements
+    AutoloaderProviderInterface,
+    BootstrapListenerInterface,
+    ConfigProviderInterface,
+    ServiceProviderInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @param unknown_type $e
      */
     public function onBootstrap($e)
@@ -28,23 +43,27 @@ class Module
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @return array
      */
     public function getAutoloaderConfig()
     {
         return array(
             'Zend\Loader\ClassMapAutoloader' => array(
-                __DIR__ . '/autoload_classmap.php',
+                __DIR__ . '/../../autoload_classmap.php',
             ),
             'Zend\Loader\StandardAutoloader' => array(
                 'namespaces' => array(
-                    __NAMESPACE__ => __DIR__ . '/src/' . __NAMESPACE__,
+                    __NAMESPACE__ => __DIR__,
                 ),
             ),
         );
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @return array
      */
     public function getConfig()
@@ -68,6 +87,8 @@ class Module
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @return array
      */
     public function getServiceConfig()
