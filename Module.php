@@ -52,16 +52,16 @@ class Module
         return array(
             'controller_plugins' => array(
                 'invokables' => array(
-                    'formSubmitted'    => 'SclZfUtilities\Controller\Plugin\FormSubmitted'
+                    'formSubmitted'  => 'SclZfUtilities\Controller\Plugin\FormSubmitted'
+                    'getFormBuilder' => 'SclZfUtilities\Controller\Plugin\FormBuilder',
                 ),
             ),
             'view_helpers' => array(
                 'invokables' => array(
-                    'formatPrice'    => 'SclZfUtilities\View\Helper\FormatPrice',
-                    'formatDate'     => 'SclZfUtilities\View\Helper\FormatDate',
-                    'getFormBuilder' => 'SclZfUtilities\Controller\Plugin\FormBuilder',
-                    'idUrl'          => 'SclZfUtilities\View\Helper\UrlWithId',
-                    'pageTitle'      => 'SclZfUtilities\View\Helper\PageTitle',
+                    'formatPrice' => 'SclZfUtilities\View\Helper\FormatPrice',
+                    'formatDate'  => 'SclZfUtilities\View\Helper\FormatDate',
+                    'idUrl'       => 'SclZfUtilities\View\Helper\UrlWithId',
+                    'pageTitle'   => 'SclZfUtilities\View\Helper\PageTitle',
                 ),
             ),
         );
