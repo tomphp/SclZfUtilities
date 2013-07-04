@@ -5,6 +5,7 @@ namespace SclZfUtilities;
 use SclZfUtilities\Hydrator\DoctrineObjectHydrator;
 use SclZfUtilities\View\Helper\ControllerActionName;
 use Zend\Stdlib\Hydrator\ClassMethods;
+use Zend\EventManager\EventInterface;
 use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
 use Zend\ModuleManager\Feature\BootstrapListenerInterface;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
@@ -24,9 +25,9 @@ class Module implements
     /**
      * {@inheritDoc}
      *
-     * @param unknown_type $e
+     * @param EventInterface $e
      */
-    public function onBootstrap($e)
+    public function onBootstrap(EventInterface $e)
     {
         $app = $e->getApplication();
 
