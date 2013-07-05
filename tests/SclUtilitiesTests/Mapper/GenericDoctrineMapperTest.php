@@ -50,6 +50,23 @@ class GenericDoctrineMapperTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test getEntityName returns the name of the entity class.
+     *
+     * @covers SclZfUtilities\Mapper\GenericDoctrineMapper::create
+     * @covers SclZfUtilities\Mapper\GenericDoctrineMapper::__construct
+     * @covers SclZfUtilities\Mapper\GenericDoctrineMapper::getEntityName
+     *
+     * @return void
+     */
+    public function testGetEntityName()
+    {
+        $this->assertEquals(
+            self::ENTITY_NAME,
+            $this->mapper->getEntityName()
+        );
+    }
+
+    /**
      * Test that create() returns an instance of ENTITY_NAME.
      *
      * @covers SclZfUtilities\Mapper\GenericDoctrineMapper::create

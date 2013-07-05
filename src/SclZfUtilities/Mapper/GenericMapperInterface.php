@@ -11,6 +11,13 @@ namespace SclZfUtilities\Mapper;
 interface GenericMapperInterface
 {
     /**
+     * Returns the class name of they entity types that this mapper works with.
+     *
+     * @return string
+     */
+    public function getEntityName();
+
+    /**
      * Creates a new instance of the entity.
      *
      * @return object
