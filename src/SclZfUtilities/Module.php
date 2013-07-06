@@ -107,9 +107,13 @@ class Module implements
                 'SclZfUtilities\Form\EntityFormBuilder' => function ($sm) {
                     $hydratorManager = $sm->get('HydratorManager');
 
+                    $annotationBuilder = $sm->get('doctrine.formannotationbuilder.orm_default');
+                    $factory = new \Zend\Form\Factory($sm->get('FormElementManager'));
+                    $annotationBuilder->setFormFactory($factory);
+
                     return new \SclZfUtilities\Form\EntityFormBuilder(
                         $sm->get('Request'),
-                        $sm->get('doctrine.formannotationbuilder.orm_default'),
+                        $annotationBuilder,
                         $hydratorManager->get('DoctrineModule\Stdlib\Hydrator\DoctrineObject')
                     );
                 },
