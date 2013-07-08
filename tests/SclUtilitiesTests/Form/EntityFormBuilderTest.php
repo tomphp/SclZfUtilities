@@ -119,6 +119,34 @@ class EntityFormBuilderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test that if a hydrator is already provided then it isn't overwritten.
+     *
+     * @covers SclZfUtilities\Form\EntityFormBuilder::prepareForm
+     *
+     * @return void
+     */
+    public function testPrepareFormWithPresetHydrator()
+    {
+        $form   = $this->getFormMock();
+        $entity = new \stdClass();
+
+        $form->expects($this->once())
+             ->method('getHydrator')
+             ->will($this->returnValue($this->getMock('Zend\Stdlib\Hydrator\HydratorInterface')));
+
+        $form->expects($this->never())
+             ->method('setHydrator');
+
+        $form->expects($this->once())
+             ->method('bind')
+             ->with($this->equalTo($entity));
+
+        $result = $this->instance->prepareForm($form, $entity);
+
+        $this->assertEquals($form, $result, 'prepareForm() should return the form.');
+    }
+
+    /**
      * Test that the prepareForm method sets the hydrator, and binds to the
      * entity but no submit button is created when the submit param is not provided.
      *

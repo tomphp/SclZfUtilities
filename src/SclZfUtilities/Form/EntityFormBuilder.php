@@ -94,7 +94,9 @@ class EntityFormBuilder
      */
     public function prepareForm(Form $form, $entity, $submit = null)
     {
-        $form->setHydrator($this->hydrator);
+        if ($form->getHydrator() === null) {
+            $form->setHydrator($this->hydrator);
+        }
 
         if (null !== $submit) {
             $form->add(
