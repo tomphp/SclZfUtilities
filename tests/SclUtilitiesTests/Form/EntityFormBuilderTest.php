@@ -19,6 +19,15 @@ class EntityFormBuilderTest extends \PHPUnit_Framework_TestCase
     protected $instance;
 
     /**
+     * options
+     *
+     * @var \SclZfUtilities\Options\FormBuilderOptionsInterface
+     */
+    protected $options;
+
+    protected $elementManager;
+
+    /**
      * Mock HTTP Request.
      *
      * @var \Zend\Http\Request
@@ -53,6 +62,10 @@ class EntityFormBuilderTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
+        $this->options = $this->getMock('SclZfUtilities\Options\FormBuilderOptionsInterface');
+
+        $this->elementManager = $this->getMock('Zend\Form\FormElementManager');
+
         $this->request = $this->getMock('Zend\Http\Request');
 
         $this->builder = $this->getMock('Zend\Form\Annotation\AnnotationBuilder');
@@ -62,9 +75,11 @@ class EntityFormBuilderTest extends \PHPUnit_Framework_TestCase
         $this->mapper = $this->getMock('SclZfUtilities\Mapper\GenericMapperInterface');
 
         $this->instance = new EntityFormBuilder(
+            $this->options,
+            $this->elementManager,
             $this->request,
-            $this->builder,
-            $this->hydrator
+            $this->hydrator,
+            $this->builder
         );
     }
 
@@ -177,6 +192,11 @@ class EntityFormBuilderTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Test that the createForm method sets the hydrator, adds a submit button
+
+     public function getterSetterProvider()
+     {RuntimeException
+
+     }
      * and binds to the entity.
      *
      * @covers SclZfUtilities\Form\EntityFormBuilder::createForm
