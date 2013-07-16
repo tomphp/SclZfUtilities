@@ -19,7 +19,7 @@ return array(
 
     'scl_zf_utilities' => array(
         'entity_form_builder' => array(
-            'map' => array(),
+            'form_entity_map' => array(),
         ),
     ),
 );

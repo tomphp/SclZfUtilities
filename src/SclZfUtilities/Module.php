@@ -112,11 +112,11 @@ class Module implements
                         $sm->get('SclZfUtilities\Doctrine\FlushLock')
                     );
                 },
-                'SclZfUtilities\Option\FormBuilderOptionsInterface' => function ($sm) {
-                    $config = $sm->getConfig();
+                'SclZfUtilities\Options\FormBuilderOptionsInterface' => function ($sm) {
+                    $config = $sm->get('Config');
 
                     return new \SclZfUtilities\Options\FormBuilderOptions(
-                        $config['scl_zf_utilities']['entity_form_builder']['map']
+                        $config['scl_zf_utilities']['entity_form_builder']
                     );
                 },
                 'SclZfUtilities\Route\UrlBuilder' => function ($sm) {
