@@ -69,22 +69,7 @@ class Module implements
      */
     public function getConfig()
     {
-        return array(
-            'controller_plugins' => array(
-                'invokables' => array(
-                    'formSubmitted'  => 'SclZfUtilities\Controller\Plugin\FormSubmitted',
-                    'getFormBuilder' => 'SclZfUtilities\Controller\Plugin\FormBuilder',
-                ),
-            ),
-            'view_helpers' => array(
-                'invokables' => array(
-                    'formatPrice' => 'SclZfUtilities\View\Helper\FormatPrice',
-                    'formatDate'  => 'SclZfUtilities\View\Helper\FormatDate',
-                    'idUrl'       => 'SclZfUtilities\View\Helper\UrlWithId',
-                    'pageTitle'   => 'SclZfUtilities\View\Helper\PageTitle',
-                ),
-            ),
-        );
+        return include __DIR__ . '/../../config/module.config.php';
     }
 
     /**
@@ -105,6 +90,8 @@ class Module implements
                     );
                 },
                 'SclZfUtilities\Form\EntityFormBuilder' => function ($sm) {
+                    $options = $sm->get('SclZfUtilities\Options\FormBuilderOptionsInterface');
+                    $elementManager = $sm->get('FormElementManager');
                     $hydratorManager = $sm->get('HydratorManager');
 
                     $annotationBuilder = $sm->get('doctrine.formannotationbuilder.orm_default');
@@ -112,15 +99,24 @@ class Module implements
                     $annotationBuilder->setFormFactory($factory);
 
                     return new \SclZfUtilities\Form\EntityFormBuilder(
+                        $options,
+                        $elementManager,
                         $sm->get('Request'),
-                        $annotationBuilder,
-                        $hydratorManager->get('DoctrineModule\Stdlib\Hydrator\DoctrineObject')
+                        $hydratorManager->get('DoctrineModule\Stdlib\Hydrator\DoctrineObject'),
+                        $annotationBuilder
                     );
                 },
                 'SclZfUtilities\Mapper\GenericDoctrineMapper' => function ($sm) {
                     return new \SclZfUtilities\Mapper\GenericDoctrineMapper(
                         $sm->get('doctrine.entitymanager.orm_default'),
                         $sm->get('SclZfUtilities\Doctrine\FlushLock')
+                    );
+                },
+                'SclZfUtilities\Option\FormBuilderOptionsInterface' => function ($sm) {
+                    $config = $sm->getConfig();
+
+                    return new \SclZfUtilities\Options\FormBuilderOptions(
+                        $config['scl_zf_utilities']['entity_form_builder']['map']
                     );
                 },
                 'SclZfUtilities\Route\UrlBuilder' => function ($sm) {

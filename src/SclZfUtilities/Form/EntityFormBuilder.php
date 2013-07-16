@@ -8,9 +8,12 @@ namespace SclZfUtilities\Form;
 
 use Doctrine\ORM\EntityManager;
 use SclZfUtilities\Exception\RuntimeException;
+use SclZfUtilities\Exception\NoFormEntityMapException;
 use SclZfUtilities\Mapper\GenericMapperInterface;
+use SclZfUtilities\Options\FormBuilderOptionsInterface;
 use Zend\Form\Annotation\AnnotationBuilder;
 use Zend\Form\Form;
+use Zend\Form\FormElementManager;
 use Zend\Http\Request;
 use Zend\Stdlib\Hydrator\HydratorInterface;
 
@@ -23,6 +26,20 @@ use Zend\Stdlib\Hydrator\HydratorInterface;
  */
 class EntityFormBuilder
 {
+    /**
+     * Options.
+     *
+     * @var FormBuilderOptionsInterface
+     */
+    protected $options;
+
+    /**
+     * The Zend FormElementManager.
+     *
+     * @var FormElementManager
+     */
+    protected $elementManager;
+
     /**
      * The mapper for loading and persisting the entities.
      *
@@ -54,21 +71,27 @@ class EntityFormBuilder
     /**
      * Initialises the form builder with the objects it needs.
      *
-     * @param Request                $request
-     * @param AnnotationBuilder      $builder
-     * @param HydratorInterface      $hydrator
-     * @param GenericMapperInterface $mapper
+     * @param FormBuilderOptionsInterface $options
+     * @param FormElementManager          $elementManager
+     * @param Request                     $request
+     * @param HydratorInterface           $hydrator
+     * @param GenericMapperInterface      $mapper
+     * @param AnnotationBuilder           $builder
      */
     public function __construct(
+        FormBuilderOptionsInterface $options,
+        FormElementManager $elementManager,
         Request $request,
-        AnnotationBuilder $builder,
         HydratorInterface $hydrator,
+        AnnotationBuilder $builder = null,
         GenericMapperInterface $mapper = null
     ) {
+        $this->options           = $options;
+        $this->elementManager    = $elementManager;
         $this->request           = $request;
-        $this->annotationBuilder = $builder;
         $this->hydrator          = $hydrator;
         $this->mapper            = $mapper;
+        $this->annotationBuilder = $builder;
     }
 
     /**
@@ -125,6 +148,18 @@ class EntityFormBuilder
      */
     public function createForm($entity, $submit = null)
     {
+        $entityMap = $this->options->getFormEntityMap();
+
+        if (isset($entityMap[$entity])) {
+            $form = $this->elementManager->get($entityMap[$entity]);
+
+            return $this->prepareForm($form, $entity, $submit);
+        }
+
+        if (null === $this->annotationBuilder) {
+            throw new NoFormEntityMapException(__METHOD__);
+        }
+
         $form = $this->annotationBuilder->createForm($entity);
 
         return $this->prepareForm($form, $entity, $submit);
