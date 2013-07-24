@@ -148,10 +148,12 @@ class EntityFormBuilder
      */
     public function createForm($entity, $submit = null)
     {
+        $entityName = get_class($entity);
+
         $entityMap = $this->options->getFormEntityMap();
 
-        if (isset($entityMap[$entity])) {
-            $form = $this->elementManager->get($entityMap[$entity]);
+        if (array_key_exists($entityName, $entityMap)) {
+            $form = $this->elementManager->get($entityMap[$entityName]);
 
             return $this->prepareForm($form, $entity, $submit);
         }
