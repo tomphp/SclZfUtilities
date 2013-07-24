@@ -220,6 +220,11 @@ class EntityFormBuilderTest extends \PHPUnit_Framework_TestCase
             ),
         );
 
+        $this->options
+             ->expects($this->any())
+             ->method('getFormEntityMap')
+             ->will($this->returnValue(array()));
+
         $this->builder
              ->expects($this->once())
              ->method('createForm')
@@ -257,6 +262,11 @@ class EntityFormBuilderTest extends \PHPUnit_Framework_TestCase
         $form   = $this->getFormMock();
 
         $entity = new \stdClass();
+
+        $this->options
+             ->expects($this->any())
+             ->method('getFormEntityMap')
+             ->will($this->returnValue(array()));
 
         $this->builder
              ->expects($this->once())
