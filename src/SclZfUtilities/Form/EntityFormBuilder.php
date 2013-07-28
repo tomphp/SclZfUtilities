@@ -9,6 +9,7 @@ namespace SclZfUtilities\Form;
 use Doctrine\ORM\EntityManager;
 use SclZfUtilities\Exception\RuntimeException;
 use SclZfUtilities\Exception\NoFormEntityMapException;
+use SclZfUtilities\Hydrator\Placeholder;
 use SclZfUtilities\Mapper\GenericMapperInterface;
 use SclZfUtilities\Options\FormBuilderOptionsInterface;
 use Zend\Form\Annotation\AnnotationBuilder;
@@ -117,7 +118,7 @@ class EntityFormBuilder
      */
     public function prepareForm(Form $form, $entity, $submit = null)
     {
-        if ($form->getHydrator() === null) {
+        if ($form->getHydrator() === null || $form->getHydrator() instanceof Placeholder) {
             $form->setHydrator($this->hydrator);
         }
 
