@@ -145,7 +145,7 @@ class EntityFormBuilderTest extends \PHPUnit_Framework_TestCase
         $form   = $this->getFormMock();
         $entity = new \stdClass();
 
-        $form->expects($this->once())
+        $form->expects($this->atLeastOnce())
              ->method('getHydrator')
              ->will($this->returnValue($this->getMock('Zend\Stdlib\Hydrator\HydratorInterface')));
 
