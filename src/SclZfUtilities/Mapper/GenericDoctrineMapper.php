@@ -5,6 +5,7 @@ namespace SclZfUtilities\Mapper;
 use Doctrine\Common\Persistence\ObjectManager;
 use SclZfUtilities\Doctrine\FlushLock;
 use SclZfUtilities\Exception\InvalidArgumentException;
+use SclZfUtilities\Exception\RuntimeException;
 
 /**
  * Basic mapper class for doctrine storage.
@@ -166,5 +167,28 @@ class GenericDoctrineMapper
         $this->entityManager->remove($entity);
 
         return $this->flushLock->unlock();
+    }
+
+    /**
+     * Makes sure a result contains a single result.
+     *
+     * @param  array|null|object entity
+     * @return object|null
+     */
+    public function singleEntity($entity)
+    {
+        if (empty($entity)) {
+            return null;
+        }
+
+        if (!is_array($entity)) {
+            return $entity;
+        }
+
+        if (count($entity) == 1) {
+            return reset($entity);
+        }
+
+        throw RuntimeException::multipleResultsFound(__METHOD__, __LINE__);
     }
 }

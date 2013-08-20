@@ -11,8 +11,6 @@ class RuntimeException extends \RuntimeException implements
     ExceptionInterface
 {
     /**
-     * methodShouldNotBeCalled
-     *
      * @param  string $method
      * @param  int    $line
      * @return RuntimeException
@@ -22,6 +20,22 @@ class RuntimeException extends \RuntimeException implements
         return new self(
             sprintf(
                 '%s should never be called (%d).',
+                $method,
+                $line
+            )
+        );
+    }
+
+    /**
+     * @param  string $method
+     * @param  int    $line
+     * @return RuntimeException
+     */
+    public static function multipleResultsFound($method, $line)
+    {
+        return new self(
+            sprintf(
+                'Multiple results were found in %s (%d) when a single one was expected.',
                 $method,
                 $line
             )
