@@ -227,4 +227,45 @@ class GenericDoctrineMapperTest extends \PHPUnit_Framework_TestCase
 
         $this->mapper->delete($entity);
     }
+
+    /*
+     * singleEntity()
+     */
+
+    /**
+     * @covers SclZfUtilities\Mapper\GenericDoctrineMapper::singleEntity
+     */
+    public function testSingleEntityReturnsNullWhenNoEntitiesProvided()
+    {
+        $this->assertNull($this->mapper->singleEntity(null));
+    }
+
+    /**
+     * @covers SclZfUtilities\Mapper\GenericDoctrineMapper::singleEntity
+     */
+    public function testSingleEntityReturnsEntityIfSingleEntityProvided()
+    {
+        $entity = new \stdClass();
+
+        $this->assertSame($entity, $this->mapper->singleEntity($entity));
+    }
+
+    /**
+     * @covers SclZfUtilities\Mapper\GenericDoctrineMapper::singleEntity
+     */
+    public function testSingleEntityReturnsEntityIfSingleEntityProvidedInList()
+    {
+        $entity = new \stdClass();
+
+        $this->assertSame($entity, $this->mapper->singleEntity(array($entity)));
+    }
+
+    /**
+     * @covers SclZfUtilities\Mapper\GenericDoctrineMapper::singleEntity
+     * @expectedException SclZfUtilities\Exception\RuntimeException
+     */
+    public function testSingleEntityThrowsIfMultipleEntitiesProvided()
+    {
+        $this->mapper->singleEntity(array(1, 2, 3));
+    }
 }
