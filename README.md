@@ -5,12 +5,12 @@ SclZfUtilities
 
 Some useful utility classes, plugins and view helpers.
 
-GenericDoctrineMapper
-=====================
+WARNING
+=======
 
-This is a class that can be extended to create Doctrine ORM based Mapper classes
-very quickly and easily.
-
+This is currently a very volitile module, a lot of stuff gets added and later moved
+to their own modules so if you decide to use this module in it's current state
+be prepared for things to change.
 
 Controller plugins
 ==================

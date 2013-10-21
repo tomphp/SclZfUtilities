@@ -10,7 +10,7 @@ use Doctrine\ORM\EntityManager;
 use SclZfUtilities\Exception\RuntimeException;
 use SclZfUtilities\Exception\NoFormEntityMapException;
 use SclZfUtilities\Hydrator\Placeholder;
-use SclZfUtilities\Mapper\GenericMapperInterface;
+use SclZfGenericMapper\MapperInterface;
 use SclZfUtilities\Options\FormBuilderOptionsInterface;
 use Zend\Form\Annotation\AnnotationBuilder;
 use Zend\Form\Form;
@@ -44,7 +44,7 @@ class EntityFormBuilder
     /**
      * The mapper for loading and persisting the entities.
      *
-     * @var GenericMapperInterface
+     * @var MapperInterface
      */
     protected $mapper;
 
@@ -76,7 +76,7 @@ class EntityFormBuilder
      * @param FormElementManager          $elementManager
      * @param Request                     $request
      * @param HydratorInterface           $hydrator
-     * @param GenericMapperInterface      $mapper
+     * @param MapperInterface             $mapper
      * @param AnnotationBuilder           $builder
      */
     public function __construct(
@@ -85,7 +85,7 @@ class EntityFormBuilder
         Request $request,
         HydratorInterface $hydrator,
         AnnotationBuilder $builder = null,
-        GenericMapperInterface $mapper = null
+        MapperInterface $mapper = null
     ) {
         $this->options           = $options;
         $this->elementManager    = $elementManager;
@@ -98,10 +98,10 @@ class EntityFormBuilder
     /**
      * Sets the mapper which will be used to fetch & save the entity.
      *
-     * @param  GenericMapperInterface $mapper
+     * @param  MapperInterface $mapper
      * @return self
      */
-    public function setMapper(GenericMapperInterface $mapper)
+    public function setMapper(MapperInterface $mapper)
     {
         $this->mapper = $mapper;
 
@@ -190,7 +190,7 @@ class EntityFormBuilder
             return false;
         }
 
-        if (!$this->mapper instanceof GenericMapperInterface) {
+        if (!$this->mapper instanceof MapperInterface) {
             throw new RuntimeException('No mapper set in ' . __METHOD__);
         }
 

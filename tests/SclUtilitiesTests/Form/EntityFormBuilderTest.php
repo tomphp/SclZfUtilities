@@ -51,7 +51,7 @@ class EntityFormBuilderTest extends \PHPUnit_Framework_TestCase
     /**
      * Mock mapper.
      *
-     * @var \SclZfUtilities\Mapper\GenericMapperInterface
+     * @var \SclZfGenericMapper\MapperInterface
      */
     protected $mapper;
 
@@ -72,7 +72,7 @@ class EntityFormBuilderTest extends \PHPUnit_Framework_TestCase
 
         $this->hydrator = $this->getMock('Zend\Stdlib\Hydrator\HydratorInterface');
 
-        $this->mapper = $this->getMock('SclZfUtilities\Mapper\GenericMapperInterface');
+        $this->mapper = $this->getMock('SclZfGenericMapper\MapperInterface');
 
         $this->instance = new EntityFormBuilder(
             $this->options,
