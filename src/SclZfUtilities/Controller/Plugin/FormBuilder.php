@@ -3,7 +3,7 @@
 namespace SclZfUtilities\Controller\Plugin;
 
 use SclZfUtilities\Form\EntityFormBuilder;
-use SclZfUtilities\Mapper\GenericMapperInterface;
+use SclZfGenericMapper\MapperInterface;
 use Zend\Mvc\Controller\Plugin\AbstractPlugin;
 
 /**
@@ -39,10 +39,10 @@ class FormBuilder extends AbstractPlugin
      * Returns an instance of the {@see EntityFormBuilder} class initialised
      * with the provided mapper.
      *
-     * @param  GenericMapperInterface $objectManager
+     * @param  MapperInterface   $objectManager
      * @return EntityFormBuilder
      */
-    public function __invoke(GenericMapperInterface $mapper)
+    public function __invoke(MapperInterface $mapper)
     {
         if (null == $this->formBuilder) {
             $serviceLocator    = $this->getServiceLocator();

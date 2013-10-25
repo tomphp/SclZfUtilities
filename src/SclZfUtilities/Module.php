@@ -106,12 +106,6 @@ class Module implements
                         $annotationBuilder
                     );
                 },
-                'SclZfUtilities\Mapper\GenericDoctrineMapper' => function ($sm) {
-                    return new \SclZfUtilities\Mapper\GenericDoctrineMapper(
-                        $sm->get('doctrine.entitymanager.orm_default'),
-                        $sm->get('SclZfUtilities\Doctrine\FlushLock')
-                    );
-                },
                 'SclZfUtilities\Options\FormBuilderOptionsInterface' => function ($sm) {
                     $config = $sm->get('Config');
 
@@ -124,9 +118,6 @@ class Module implements
                     $builder->setRouter($sm->get('HttpRouter'));
                     return $builder;
                 },
-            ),
-            'shared' => array(
-                'SclZfUtilities\Mapper\GenericDoctrineMapper' => false,
             ),
         );
     }
