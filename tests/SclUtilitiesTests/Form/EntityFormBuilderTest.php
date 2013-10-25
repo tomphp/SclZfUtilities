@@ -93,6 +93,21 @@ class EntityFormBuilderTest extends \PHPUnit_Framework_TestCase
         return $this->getMock('Zend\Form\Form');
     }
 
+    /*
+    public function test_service_manager_creates_successfully()
+    {
+        $serviceManager = \TestBootstrap::getApplication()
+                                        ->getServiceManager();
+
+        // Problem is phpunit is setting Console Request object
+
+        $this->assertInstanceOf(
+            'SclZfUtilities\Form\EntityFormBuilder',
+            $serviceManager->get('SclZfUtilities\Form\EntityFormBuilder')
+        );
+    }
+    */
+
     /**
      * Test that the prepareForm method sets the hydrator, adds a submit button
      * and binds to the entity.

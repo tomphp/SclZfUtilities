@@ -94,7 +94,7 @@ class Module implements
                     $elementManager = $sm->get('FormElementManager');
                     $hydratorManager = $sm->get('HydratorManager');
 
-                    $annotationBuilder = $sm->get('DoctrineORMModule\Form\Annotation\AnnotationBuilder');
+                    $annotationBuilder = $sm->get('doctrine.formannotationbuilder.orm_default');
                     $factory = new \Zend\Form\Factory($sm->get('FormElementManager'));
                     $annotationBuilder->setFormFactory($factory);
 
