@@ -11,4 +11,14 @@ return array(
             ),
         ),
     ),
+
+    /*
+    'service_manager' => array(
+        'factories' => array(
+            'Request' => function ($sm) {
+                return new \Zend\Http\Request();
+            }
+        ),
+    ),
+    */
 );

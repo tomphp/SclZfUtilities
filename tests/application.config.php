@@ -15,7 +15,7 @@ return array(
     ),
     'module_listener_options' => array(
         'config_glob_paths'    => array(
-            'config.global.php',
+            __DIR__ . '/config.global.php',
         ),
         'module_paths' => array(
             __DIR__ . '/../..',

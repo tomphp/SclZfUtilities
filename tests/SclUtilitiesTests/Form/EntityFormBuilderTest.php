@@ -93,20 +93,18 @@ class EntityFormBuilderTest extends \PHPUnit_Framework_TestCase
         return $this->getMock('Zend\Form\Form');
     }
 
-    /*
     public function test_service_manager_creates_successfully()
     {
+        $this->setRequestTypeToHttp();
+
         $serviceManager = \TestBootstrap::getApplication()
                                         ->getServiceManager();
-
-        // Problem is phpunit is setting Console Request object
 
         $this->assertInstanceOf(
             'SclZfUtilities\Form\EntityFormBuilder',
             $serviceManager->get('SclZfUtilities\Form\EntityFormBuilder')
         );
     }
-    */
 
     /**
      * Test that the prepareForm method sets the hydrator, adds a submit button
@@ -459,5 +457,20 @@ class EntityFormBuilderTest extends \PHPUnit_Framework_TestCase
         $result = $this->instance->save($entity, $form);
 
         $this->assertTrue($result);
+    }
+
+    /*
+     * Private methods
+     */
+    private function setRequestTypeToHttp()
+    {
+        $serviceManager = \TestBootstrap::getApplication()
+                                        ->getServiceManager();
+
+        $serviceManager->setAllowOverride(true);
+
+        $serviceManager->setFactory('Request', function ($sm) {
+            return new \Zend\Http\Request();
+        });
     }
 }
