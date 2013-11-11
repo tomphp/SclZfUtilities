@@ -84,11 +84,6 @@ class Module implements
                 'SclZfUtilities\Model\Messages' => 'SclZfUtilities\Model\Messages',
             ),
             'factories' => array(
-                'SclZfUtilities\Doctrine\FlushLock' => function ($sm) {
-                    return new \SclZfUtilities\Doctrine\FlushLock(
-                        $sm->get('doctrine.entitymanager.orm_default')
-                    );
-                },
                 'SclZfUtilities\Form\EntityFormBuilder' => function ($sm) {
                     $options = $sm->get('SclZfUtilities\Options\FormBuilderOptionsInterface');
                     $elementManager = $sm->get('FormElementManager');
